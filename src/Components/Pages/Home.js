@@ -5,7 +5,7 @@ import HeroComponent from "../HeroComponent";
 function Home () {
     return (
         <>
-            <HeroComponent />
+            <HeroComponent/>
         </>
     );
 }

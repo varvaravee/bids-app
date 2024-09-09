@@ -14,6 +14,7 @@ export const Button = ({
   onClick,
   buttonStyle,
   buttonSize,
+  path
 }) => {
     //check if provided buttonstyle and buttonsize exist in the STYLES and SIZES arrays, default to first element in each array
   const checkButtonStyle = STYLES.includes(buttonStyle)
@@ -26,7 +27,7 @@ export const Button = ({
 
   //returns JSX element which consists of a link component from react-router-dom wrapping a button element
   return (
-    <Link to='/add-account' className='btn-mobile'>
+    <Link to={path} className='btn-mobile'>
       <button
         className={`btn ${checkButtonStyle} ${checkButtonSize}`}
         onClick={onClick}

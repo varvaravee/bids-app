@@ -4,7 +4,7 @@ import { BsFileEarmarkBarGraph } from "react-icons/bs";
 import "./NavBar.css";
 import { Button } from "./Button";
 
-function NavBar() {
+function NavBar({isLoggedIn}) {
   const [click, setClick] = useState(false); //declares state variable click and function setClick that updates its value with its state initialized to false
   const [button, setButton] = useState(true);
 
@@ -43,35 +43,40 @@ function NavBar() {
                 Home
               </Link>
             </li>
-            <li className="nav-item">
-              <Link
-                to="/accounts"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Accounts
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/something"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Something
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/add-account"
-                className="nav-links-mobile"
-                onClick={closeMobileMenu}
-              >
-                Add Account
-              </Link>
-            </li>
+
+            {isLoggedIn && (
+              <>
+                <li className="nav-item">
+                  <Link
+                    to="/Accounts"
+                    className="nav-links"
+                    onClick={closeMobileMenu}
+                  >
+                    Accounts
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/Contact"
+                    className="nav-links"
+                    onClick={closeMobileMenu}
+                  >
+                    Contact
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to="/add-account"
+                    className="nav-links-mobile"
+                    onClick={closeMobileMenu}
+                  >
+                    Add Account
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
-          {button && <Button buttonStyle="btn--outline">ADD ACCOUNT</Button>}
+          {button && isLoggedIn && (<Button buttonStyle="btn--outline" path='/add-account'>ADD ACCOUNT</Button> )}
         </div>
       </nav>
     </>
