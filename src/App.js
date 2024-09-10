@@ -19,9 +19,9 @@ function App() {
    <>
    <Router>
       <NavBar isLoggedIn={isLoggedIn} /> 
-      <LoginForm onLogin={handleLogin} />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path="/login" element={<LoginForm onLogin={handleLogin} />}/>
         </Routes>
       </Router>
 

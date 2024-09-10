@@ -1,0 +1,72 @@
+
+form {
+  width: 100%;
+  margin-top: 80px; /* Adjust this value if needed */
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+  max-width: 500px; /* Optional: limit the width of the form */
+  margin: 200px auto 0 auto; /* Center the form horizontally */
+  background: url("../../images/oil-surveyor1.png") center center/cover no-repeat;
+  padding: 100px; /* Add some padding inside the form */
+  border-radius: 8px; /* Optional: add rounded corners */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* style for each form group (label and input) */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* style for labels */
+label {
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #f9fafc;
+}
+
+/* style for input fields */
+input {
+    padding: 10px;
+    background-color: #c0d6b8;
+    font-size:16px;
+    border: 1px solid #838c92;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/* change input border color when focused */
+input:focus {
+    border: 3px solid #4c7aaf;
+    outline: none;
+    background-color:aliceblue;
+}
+
+/* style for submit button */
+button[type="submit"] {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 0;
+    background-color:#3e5f7a;
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* change button background color on hover */
+button[type="submit"]:hover {
+    background-color: transparent;
+}
+
+/* responsive styling for smaller screens */
+@media screen and (max-width: 600px) {
+    form {
+        width: 100%;
+        padding: 15px;
+    }
+}

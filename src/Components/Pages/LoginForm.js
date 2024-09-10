@@ -60,7 +60,7 @@ function LoginForm({ onLogin }) {
                     required
                 />
             </div>
-            <button type="submit">Login</button> //submit form when button clicked
+            <button type="submit">Login</button>
         </form>
     );
 }
