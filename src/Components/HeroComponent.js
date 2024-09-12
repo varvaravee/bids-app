@@ -19,6 +19,14 @@ function HeroComponent() {
           >
             LOG IN
           </Button>
+          <Button 
+          className='btns' 
+          buttonStyle='btn--chill'
+          buttonSize='btn--large'
+          path='/register'
+          >
+            REGISTER
+          </Button>
         </div>
         <div className='hero-btns'>
           

@@ -3,7 +3,7 @@ import "./Button.css";
 import { Link } from "react-router-dom";
 
 //arrays contain predefined sizes and styles for the button defined in Button.css
-const STYLES = ["btn--primary", "btn--outline"];
+const STYLES = ["btn--primary", "btn--outline", "btn--chill"];
 const SIZES = ["btn--medium", "btn--large"];
 
 //button functional component exported
