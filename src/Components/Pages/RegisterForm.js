@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import './RegisterForm.css';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterForm({ onRegister}) {
     //state hooks to manage form input fields 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate(); 
 
     //function to handle form submission
     const handleSubmit = async (e) => {
@@ -22,7 +24,7 @@ function RegisterForm({ onRegister}) {
             const response = await fetch('/register', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'applicaiton/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, password}), //send username and password
             });
@@ -32,6 +34,7 @@ function RegisterForm({ onRegister}) {
             if (response.ok) {
                 alert('Registration successful!');
                 onRegister(); //update registration state in parent component (if necessary)
+                navigate('/login');
             } else {
                 alert(data.message); //display error message returned from backend
             }
