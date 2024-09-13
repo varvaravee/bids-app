@@ -12,7 +12,7 @@ function LoginForm({ onLogin }) {
 
         try {
             //make a POST request to the Flask backend at the '/login' endpoint
-            const response = await fetch('/login', {
+            const response = await fetch('http://localhost:5000/login', {
                 method: 'POST', //specify HTTP method as POST
                 headers: {
                     'Content-Type': 'application/json', //set content type to JSON

@@ -21,7 +21,7 @@ function RegisterForm({ onRegister}) {
 
         try {
             //make POST request to '/register' route in Flask backend
-            const response = await fetch('/register', {
+            const response = await fetch('http://localhost:5000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,11 +30,12 @@ function RegisterForm({ onRegister}) {
             });
 
             const data = await response.json(); //parse response from backend as JSON
+            console.log('Response data:', data); //log response data
 
             if (response.ok) {
                 alert('Registration successful!');
                 onRegister(); //update registration state in parent component (if necessary)
-                navigate('/login');
+                navigate('/login'); //redirect to the login page after successful registration
             } else {
                 alert(data.message); //display error message returned from backend
             }

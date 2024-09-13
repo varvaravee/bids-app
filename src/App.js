@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path="/login" element={<LoginForm onLogin={handleLogin} />}/>
-        <Route path="/register" element={<RegisterForm onRegister/>}/>
+        <Route path="/register" element={<RegisterForm />}/>
         </Routes>
       </Router>
 
