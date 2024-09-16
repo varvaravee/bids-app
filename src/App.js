@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import NavBar from './Components/NavBar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
@@ -10,22 +11,25 @@ import RegisterForm from "./Components/Pages/RegisterForm";
 
 function App() {
   const[isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate(); 
 
   //function to handle login
   const handleLogin = () => {
+    console.log('Login successful, navigating to /accounts.');
     setIsLoggedIn(true);
+    navigate('/accounts');
   };
 
   return (
    <>
-   <Router>
+  
       <NavBar isLoggedIn={isLoggedIn} /> 
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path="/login" element={<LoginForm onLogin={handleLogin} />}/>
         <Route path="/register" element={<RegisterForm />}/>
-        </Routes>
-      </Router>
+      </Routes>
+  
 
    </> 
   );
