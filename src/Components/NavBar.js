@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import AuthContext from "../AuthContext";
 import { Link } from "react-router-dom";
 import { BsFileEarmarkBarGraph } from "react-icons/bs";
 import "./NavBar.css";
 import { Button } from "./Button";
 
-function NavBar({isLoggedIn}) {
+function NavBar() {
+
+  //use context hook to access isLoggedIn
+  const { isLoggedIn } = useContext(AuthContext);
+
   const [click, setClick] = useState(false); //declares state variable click and function setClick that updates its value with its state initialized to false
   const [button, setButton] = useState(true);
-
   const handleClick = () => setClick(!click); //defines arrow function handleClick which toggles value of click state between true and false when menu icon is clicked
   const closeMobileMenu = () => setClick(false); //arrow function that sets click to false therefore hiding the click in the logo to off
-
   const showButton = () => {
     if (window.innerWidth <= 960) {
       //hides button when inner width of window less than or equal to 960px

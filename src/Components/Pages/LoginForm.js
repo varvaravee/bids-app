@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import { Navigate } from 'react-router-dom'; //import navigate for redirection
 import './LoginForm.css';
+import AuthContext from "../../AuthContext";
 
-function LoginForm({ onLogin }) {
+function LoginForm() {
     //useState hooks to manage state of username and password fields
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
     const [username, setUsername] = useState(''); //state to store the username input
     const [password, setPassword] = useState(''); //state to store the password input
+    const [redirect, setRedirect] = useState(false); //state to handle redirection
 
     //function called when form submitted
     const handleSubmit = async (e) => {
@@ -23,7 +27,8 @@ function LoginForm({ onLogin }) {
             const data = await response.json();
     
             if (response.ok && data.success) { //response.ok checks if HTTP response status code is in range of 200-299 (succesful request)
-                onLogin(); //update login state in parent component
+                setIsLoggedIn(true); //update state using context
+                setRedirect(true); //trigger redirection on successful login
                 //handle succesful login 
                 //console.log("Login successful! Redirecting...");
                 //update the UI
@@ -39,6 +44,11 @@ function LoginForm({ onLogin }) {
         }
   
     };
+
+    //if redirect triggered, redirect to the desired route
+    if (redirect) {
+        return <Navigate to="/Accounts"/>; //redirect to accounts page
+    }
 
     return (
         <form onSubmit={handleSubmit}>

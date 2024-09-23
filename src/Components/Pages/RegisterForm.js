@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import './RegisterForm.css';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom'; //import navigate for redirection
 
-function RegisterForm({ onRegister}) {
+function RegisterForm() {
     //state hooks to manage form input fields 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const navigate = useNavigate(); 
+    const [redirect, setRedirect] = useState(false); //state to handle redirection
 
     //function to handle form submission
     const handleSubmit = async (e) => {
@@ -34,8 +34,7 @@ function RegisterForm({ onRegister}) {
 
             if (response.ok) {
                 alert('Registration successful!');
-                onRegister(); //update registration state in parent component (if necessary)
-                navigate('/login'); //redirect to the login page after successful registration
+                setRedirect(true); //trigger redirection after successful registration
             } else {
                 alert(data.message); //display error message returned from backend
             }
@@ -44,6 +43,11 @@ function RegisterForm({ onRegister}) {
             alert('An error occurred. Please try again.');
         }
     };
+
+    //if redirect is triggered, redirect to the desired route
+    if (redirect) {
+        return <Navigate to="/login" />; //redirect to the login page after registration
+    }
 
     return (
         <form onSubmit={handleSubmit}>
