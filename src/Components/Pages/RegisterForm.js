@@ -21,12 +21,13 @@ function RegisterForm() {
 
         try {
             //make POST request to '/register' route in Flask backend
-            const response = await fetch('/register', {
+            const response = await fetch('http://localhost:5000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, password}), //send username and password
+                credentials: 'include', //allow sending of cookirs/session data
             });
 
             const data = await response.json(); //parse response from backend as JSON

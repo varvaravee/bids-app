@@ -16,12 +16,13 @@ function LoginForm() {
 
         try {
             //make a POST request to the Flask backend at the '/login' endpoint
-            const response = await fetch('/login', {
+            const response = await fetch('http://localhost:5000/login', {
                 method: 'POST', //specify HTTP method as POST
                 headers: {
                     'Content-Type': 'application/json', //set content type to JSON
                 },
                 body: JSON.stringify({ username, password}), //send username and password as JSON object in request body
+                credentials: 'include', //allow sending of cookies/session data
             });
             //parse response from server as JSON
             const data = await response.json();
