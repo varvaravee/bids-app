@@ -1,7 +1,10 @@
 import React, { useState, createContext } from 'react'; 
 
 //create context object that will allow to both provide and consume state
-const AuthContext = createContext()
+const AuthContext = React.createContext({
+    isLoggedIn: false,
+    setIsLoggedIn: () => {}
+})
 
 //create provider component used to wrap the app and provide state to all children
 export const AuthProvider = ({ children }) => { 

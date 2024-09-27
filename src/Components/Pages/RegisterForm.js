@@ -27,7 +27,7 @@ function RegisterForm() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, password}), //send username and password
-                credentials: 'include', //allow sending of cookirs/session data
+                credentials: 'include', //allow sending of cookies/session data from browser to Flask
             });
 
             const data = await response.json(); //parse response from backend as JSON
