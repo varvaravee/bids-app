@@ -6,21 +6,35 @@ import AuthContext from "../AuthContext";
 import "../App.css";
 
 function HeroComponent() {
-  //use context hook to access isLoggedIn
+
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-  const navigate = useNavigate(); //for redirecting after logout
 
-  //logout function
-  const handleLogout = () => {
-    //update authcontextto reflect user is logged out
-    setIsLoggedIn(false);
+  //function to handle logout
+  const handleLogout = async () => {
+    try {
+      //make POST request to Flask backend to log out
+      const response = await fetch('http://localhost:5000/logout', {
+        method:'POST',
+        credentials: 'include', //include credentials for session-based authentication
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
 
-    //clear any stored auth tokens 
-    localStorage.removeItem('authToken'); //if using local storage
+      if (response.ok) {
+        //on successful logout, update the local login state
+        setIsLoggedIn(false);
+        localStorage.removeItem('authToken'); //clear local storage if using 
+        console.log(data.message); //log success message (optimal)
+      } else {
+        console.error('Logout failed:', data.message);
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
-    //redirect to home or login page after logout
-    
-  }
 
   return (
     <div className="hero-container">
@@ -33,7 +47,7 @@ function HeroComponent() {
               className='btns' 
               buttonStyle='btn--outline'
               buttonSize='btn--large'
-              onCLick={handleLogout}
+              onClick={handleLogout}
             >
               LOG OUT
             </Button>
@@ -47,18 +61,19 @@ function HeroComponent() {
               LOG IN
             </Button>
           )}
-          <Button 
-            className='btns' 
-            buttonStyle='btn--chill'
-            buttonSize='btn--large'
-            path='/register'
-          >
-            REGISTER
-          </Button>
+
+          {!isLoggedIn && (
+            <Button 
+              className='btns' 
+              buttonStyle='btn--chill'
+              buttonSize='btn--large'
+              path='/register'
+            >
+              REGISTER
+            </Button>
+          )}
         </div>
-        <div className='hero-btns'>
-          
-        </div>
+        
     </div>
   );
 }
