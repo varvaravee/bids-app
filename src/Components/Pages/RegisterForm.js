@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './RegisterForm.css';
 import { Navigate } from 'react-router-dom'; //import navigate for redirection
+import CryptoJS from 'crypto-js'; //import crypto-js for encryption
 
 function RegisterForm() {
     //state hooks to manage form input fields 
@@ -62,7 +63,7 @@ function RegisterForm() {
                 />
             </div>
             <div className="form-group">
-                <label>Password:</label>
+                <label>Master Password:</label>
                 <input 
                     type="password"
                     value={password}
@@ -71,7 +72,7 @@ function RegisterForm() {
                 />
             </div>
             <div className="form-group">
-                <label>Confirm Password:</label>
+                <label>Confirm Master Password:</label>
                 <input
                     type="password"
                     value={confirmPassword}

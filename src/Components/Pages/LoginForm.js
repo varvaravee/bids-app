@@ -2,10 +2,11 @@ import React, {useState, useContext} from 'react';
 import { Navigate } from 'react-router-dom'; //import navigate for redirection
 import './LoginForm.css';
 import AuthContext from "../../AuthContext";
+import CryptoJS from 'crypto-js'; //import crypto-js for encryption
 
 function LoginForm() {
     //useState hooks to manage state of username and password fields
-    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+    const { isLoggedIn, setIsLoggedIn, setEncryptionKey } = useContext(AuthContext);
     const [username, setUsername] = useState(''); //state to store the username input
     const [password, setPassword] = useState(''); //state to store the password input
     const [redirect, setRedirect] = useState(false); //state to handle redirection
@@ -26,9 +27,18 @@ function LoginForm() {
             });
             //parse response from server as JSON
             const data = await response.json();
+            console.log('Response data:', data);
     
             if (response.ok && data.success) { //response.ok checks if HTTP response status code is in range of 200-299 (succesful request)
                 setIsLoggedIn(true); //update state using context
+
+                //Derive encryption key from master pw using PBKDF2 with random salt, key essential for encrypting and decrypting user's saved pw
+                const salt = CryptoJS.lib.WordArray.random(128/8).toString(); //generate random salt
+                const key = Crypto.PBKDF2(password, CryptoJS.enc.Hex.parse(salt), {
+                    keySize: 256/32,
+                    iterations: 1000
+                });
+                setEncryptionKey(key); //store encryption key in context
                 setRedirect(true); //trigger redirection on successful login
                 //handle succesful login 
                 //console.log("Login successful! Redirecting...");
@@ -63,7 +73,7 @@ function LoginForm() {
                 />
             </div>
             <div className="form-group">
-                <label>Password:</label>
+                <label>Master Password:</label>
                 <input
                     type="password"
                     value={password}
