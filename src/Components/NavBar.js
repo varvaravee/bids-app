@@ -51,7 +51,7 @@ function NavBar() {
               <>
                 <li className="nav-item">
                   <Link
-                    to="/Accounts"
+                    to="/SavedPasswords"
                     className="nav-links"
                     onClick={closeMobileMenu}
                   >
@@ -69,7 +69,7 @@ function NavBar() {
                 </li>
                 <li className="nav-item">
                   <Link
-                    to="/add-account"
+                    to="/SavePassword"
                     className="nav-links-mobile"
                     onClick={closeMobileMenu}
                   >
@@ -79,7 +79,7 @@ function NavBar() {
               </>
             )}
           </ul>
-          {button && isLoggedIn && (<Button buttonStyle="btn--outline" path='/add-account'>ADD ACCOUNT</Button> )}
+          {button && isLoggedIn && (<Button buttonStyle="btn--outline" path='/SavePassword'>ADD ACCOUNT</Button> )}
         </div>
       </nav>
     </>

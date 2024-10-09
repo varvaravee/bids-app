@@ -6,6 +6,8 @@ import Home from "./Components/Pages/Home";
 import LoginForm from "./Components/Pages/LoginForm";
 import RegisterForm from "./Components/Pages/RegisterForm";
 import NavBar from './Components/NavBar';
+import SavedPasswords from './Components/Pages/SavedPasswords';
+import SavePassword from './Components/Pages/SavePassword';
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/SavedPasswords" element={<SavedPasswords/>} />
+          <Route path="/SavePassword" element={<SavePassword/>}/>
         </Routes>
       </Router>
     </AuthProvider>

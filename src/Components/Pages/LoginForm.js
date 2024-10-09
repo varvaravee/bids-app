@@ -34,7 +34,7 @@ function LoginForm() {
 
                 //Derive encryption key from master pw using PBKDF2 with random salt, key essential for encrypting and decrypting user's saved pw
                 const salt = CryptoJS.lib.WordArray.random(128/8).toString(); //generate random salt
-                const key = Crypto.PBKDF2(password, CryptoJS.enc.Hex.parse(salt), {
+                const key = CryptoJS.PBKDF2(password, CryptoJS.enc.Hex.parse(salt), {
                     keySize: 256/32,
                     iterations: 1000
                 });

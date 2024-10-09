@@ -1,7 +1,7 @@
 //this file handles decrypting passwords for a master pw and retrieving them
 import React, { useEffect, useState, useContext } from 'react';
 import AuthContext from "../../AuthContext";
-import CryptoJS from 'cryto-js';
+import CryptoJS from 'crypto-js';
 
 function SavedPasswords() {
     const { encryptionKey } = useContext(AuthContext);
@@ -56,15 +56,15 @@ function SavedPasswords() {
         <div>
             <h2>Saved Passwords</h2>
             <table>
-                <thread>
+                <thead>
                     <tr>
                         <th>Website</th>
                         <th>Username</th>
                         <th>Password</th>
                     </tr>
-                </thread>
+                </thead>
                 <tbody>
-                    {password.map((pwd, index) => (
+                    {passwords.map((pwd, index) => (
                         <tr key={index}>
                             <td>{pwd.website}</td>
                             <td>{pwd.username}</td>
@@ -74,5 +74,7 @@ function SavedPasswords() {
                 </tbody>
             </table>
         </div>
-    )
+    );
 }
+
+export default SavedPasswords;
