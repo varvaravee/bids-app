@@ -32,8 +32,10 @@ function LoginForm() {
             if (response.ok && data.success) { //response.ok checks if HTTP response status code is in range of 200-299 (succesful request)
                 setIsLoggedIn(true); //update state using context
 
+                //retrieve salt stored in backend
+                const salt = data.salt;
+
                 //Derive encryption key from master pw using PBKDF2 with random salt, key essential for encrypting and decrypting user's saved pw
-                const salt = CryptoJS.lib.WordArray.random(128/8).toString(); //generate random salt
                 const key = CryptoJS.PBKDF2(password, CryptoJS.enc.Hex.parse(salt), {
                     keySize: 256/32,
                     iterations: 1000
@@ -58,7 +60,7 @@ function LoginForm() {
 
     //if redirect triggered, redirect to the desired route
     if (redirect) {
-        return <Navigate to="/Accounts"/>; //redirect to accounts page
+        return <Navigate to="/SavedPasswords"/>; //redirect to accounts page
     }
 
     return (

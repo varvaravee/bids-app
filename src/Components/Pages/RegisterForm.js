@@ -21,13 +21,16 @@ function RegisterForm() {
         }
 
         try {
+            //generate random salt for encryption (only once during registration)
+            const salt = CryptoJS.lib.WordArray.random(128/8).toString();
+            
             //make POST request to '/register' route in Flask backend
             const response = await fetch('http://localhost:5000/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, password}), //send username and password
+                body: JSON.stringify({ username, password, salt}), //send username and password and salt to backend
                 credentials: 'include', //allow sending of cookies/session data from browser to Flask
             });
 
