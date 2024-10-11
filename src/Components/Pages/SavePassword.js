@@ -16,10 +16,15 @@ function SavePassword() {
             alert('Encryption key not found. Please log in again.');
             return;
         }
+        console.log('Encryption Key (type):', typeof encryptionKey);
+        console.log('Encryption Key (value):', encryptionKey);
+
+        // Convert WordArray encryptionKey to a Base64 string
+        const encryptionKeyString = CryptoJS.enc.Base64.stringify(encryptionKey);
 
         //encrypt the username and password
-        const encryptedUsername = CryptoJS.AES.encrypt(username, encryptionKey).toString();
-        const encryptedPassword = CryptoJS.AES.encrypt(password, encryptionKey).toString();
+        const encryptedUsername = CryptoJS.AES.encrypt(username, encryptionKeyString).toString();
+        const encryptedPassword = CryptoJS.AES.encrypt(password, encryptionKeyString).toString();
 
         try {
             const response = await fetch('http://localhost:5000/save_password', {
