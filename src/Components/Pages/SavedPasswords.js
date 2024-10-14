@@ -7,50 +7,45 @@ function SavedPasswords() {
     const { encryptionKey } = useContext(AuthContext);
     const [passwords, setPasswords] = useState([]);
 
-    useEffect(() => {
-        const fetchPasswords = async () => {
-            if (!encryptionKey) {
-                alert('Encryption key not found. Please log in again.');
-                return;
-            }
+    const fetchPasswords = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/get_passwords', {
+                method: 'GET',
+                credentials: 'include',
+            });
 
-            try {
-                const response = await fetch('http://localhost:5000/get_passwords', {
-                    method: 'GET',
-                    credentials: 'include',
+            const data = await response.json();
+            console.log('Fetched passwords:', data);
+
+            if (response.ok) {
+                //decrypt pws
+                //convert the encryptionkey to base64 string before decrypting
+                const encryptionKeyString = CryptoJS.enc.Base64.stringify(encryptionKey);
+
+                const decryptedPasswords = data.passwords.map((savedPassword) => {
+                    const decryptedUsername = CryptoJS.AES.decrypt(savedPassword.encrypted_username, encryptionKeyString).toString(CryptoJS.enc.Utf8);
+                    const decryptedPassword = CryptoJS.AES.decrypt(savedPassword.encrypted_password, encryptionKeyString).toString(CryptoJS.enc.Utf8);
+
+                    return {
+                        website: savedPassword.website,
+                        username: decryptedUsername,
+                        password: decryptedPassword
+                    };
                 });
 
-                const data = await response.json();
-                console.log('Fetched passwords:', data);
+                setPasswords(decryptedPasswords);
+            } else {
+                console.error('Error fetching passwords:', data.message);
+            }           }
+            catch (error) {
+                console.error('Error fetching passwords:', error);
+                alert('An error occured. Please try again.');
+            }
+    };
 
-                if (response.ok) {
-                    //decrypt pws
-                    const decryptedPasswords = data.passwords.map(pwd => {
-                        const bytesUsername = CryptoJS.AES.decrypt(pwd.encrypted_username, encryptionKey);
-                        const decryptedUsername = bytesUsername.toString(CryptoJS.enc.Utf8);
-
-                        const bytesPassword = CryptoJS.AES.decrypt(pwd.encrypted_password, encryptionKey);
-                        const decryptedPassword = bytesPassword.toString(CryptoJS.enc.Utf8);
-
-                        return {
-                            website: pwd.website,
-                            username: decryptedUsername,
-                            password: decryptedPassword
-                        };
-                    });
-
-                    setPasswords(decryptedPasswords);
-                } else {
-                    alert(data.message);
-                }           }
-                catch (error) {
-                    console.error('Error fetching passwords:', error);
-                    alert('An error occured. Please try again.');
-                }
-        };
-
+        useEffect(() => {
         fetchPasswords();
-    }, [encryptionKey]);
+    }, []);
 
     return (
         <div>
@@ -64,11 +59,11 @@ function SavedPasswords() {
                     </tr>
                 </thead>
                 <tbody>
-                    {passwords.map((pwd, index) => (
+                    {passwords.map((password, index) => (
                         <tr key={index}>
-                            <td>{pwd.website}</td>
-                            <td>{pwd.username}</td>
-                            <td>{pwd.password}</td>
+                            <td>{password.website}</td>
+                            <td>{password.decryptedUsername}</td>
+                            <td>{password.decryptedPassword}</td>
                         </tr>
                     ))}
                 </tbody>
