@@ -55,7 +55,7 @@ function NavBar() {
                     className="nav-links"
                     onClick={closeMobileMenu}
                   >
-                    Accounts
+                    Passwords
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -73,13 +73,13 @@ function NavBar() {
                     className="nav-links-mobile"
                     onClick={closeMobileMenu}
                   >
-                    Add Account
+                    Add Password
                   </Link>
                 </li>
               </>
             )}
           </ul>
-          {button && isLoggedIn && (<Button buttonStyle="btn--outline" path='/SavePassword'>ADD ACCOUNT</Button> )}
+          {button && isLoggedIn && (<Button buttonStyle="btn--outline" path='/SavePassword'>ADD PASSWORD</Button> )}
         </div>
       </nav>
     </>

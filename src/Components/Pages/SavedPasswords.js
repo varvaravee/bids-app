@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import AuthContext from "../../AuthContext";
 import CryptoJS from 'crypto-js';
+import "./SavedPasswords.css"
 
 
 //fetchPasswords outside of component to limit additional rendering
@@ -27,6 +28,7 @@ const fetchPasswords = async (encryptionKeyString) => {
                     password: decryptedPassword
                 };
             });
+            console.log("Decrypted Passwords:", decryptedPasswords); //log to verify data structure
 
             return decryptedPasswords; //return decrypted passwords
         } else {
@@ -55,12 +57,11 @@ function SavedPasswords() {
         };
 
         loadPasswords(); //call function when component mounts
-    }, [encryptionKey]); //dependency array contains encryptionKey
+    }, [encryptionKey]); //dependency array contains encryptionKey, function re-executed whenever this dependency changes
 
 
     return (
         <div>
-            <h2>Saved Passwords</h2>
             <table>
                 <thead>
                     <tr>
@@ -73,8 +74,8 @@ function SavedPasswords() {
                     {passwords.map((password, index) => (
                         <tr key={index}>
                             <td>{password.website}</td>
-                            <td>{password.decryptedUsername}</td>
-                            <td>{password.decryptedPassword}</td>
+                            <td>{password.username}</td>
+                            <td>{password.password}</td>
                         </tr>
                     ))}
                 </tbody>

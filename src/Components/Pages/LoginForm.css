@@ -1,4 +1,9 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0e9d8;
+    margin-top: 80px;
 
+}
 form {
   width: 100%;
   margin-top: 80px; /* Adjust this value if needed */
