@@ -66,9 +66,9 @@ function SavedPasswords() {
 
   //Function to copy password to clipboard
   function handleCopyPassword(password) {
-        navigator.clipboard.writeText(password);
-        alert("Password copied to clipboard!");
-    }
+    navigator.clipboard.writeText(password);
+    alert("Password copied to clipboard!");
+  }
 
   //Function to handle changing password for website
   const handleChangePassword = async (website) => {
