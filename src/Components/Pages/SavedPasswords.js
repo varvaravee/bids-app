@@ -76,12 +76,17 @@ function SavedPasswords() {
     if (!newPassword) return;
 
     try {
+      console.log("New password:", newPassword);
+      console.log("Website:", website);
+      
       //encrypt the new password using encryptionKey
       const encryptionKeyString = CryptoJS.enc.Base64.stringify(encryptionKey);
       const encryptedPassword = CryptoJS.AES.encrypt(
         newPassword,
         encryptionKeyString
       ).toString();
+
+      console.log("encrypted password:", encryptedPassword);
 
       const response = await fetch("http://localhost:500/change_password", {
         method: "POST",
@@ -96,6 +101,8 @@ function SavedPasswords() {
       });
 
       const data = await response.json();
+      console.log("Response from server:", data);
+
       if (response.ok) {
         alert("Password updated successfully");
       } else {
@@ -106,6 +113,60 @@ function SavedPasswords() {
       alert("An error occurred while updating the password.");
     }
   };
+
+  function handleDeleteEntry(website) {
+    // Ensure the website parameter is provided
+    if (!website) {
+      alert('No website provided for deletion.');
+      return;
+    }
+  
+    // Confirm deletion with user
+    const confirmDelete = confirm(`Are you sure you want to delete the password for "${website}"?`);
+    if (!confirmDelete) return;
+  
+    try {
+      console.log(`Deleting entry for: ${website}`);
+  
+      // Send request to server to delete the entry
+      fetch('https://localhost:500/delete_entry', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ website }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            alert('Entry deleted successfully.');
+            // Update the UI to remove the entry
+            removeEntryFromUI(website);
+          } else {
+            response.json().then((data) => {
+              alert(data.message || 'Failed to delete entry.');
+            });
+          }
+        })
+        .catch((error) => {
+          console.error('Error deleting entry:', error);
+          alert('An error occurred while deleting the entry.');
+        });
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      alert('An unexpected error occurred while deleting the entry.');
+    }
+  }
+  
+
+  function removeEntryFromUI(website) {
+    // Locate and remove the entry from the table
+    const rowToDelete = document.querySelector(`[data-website="${website}"]`);
+    if (rowToDelete) {
+        rowToDelete.remove();
+        console.log(`Entry for ${website} removed from the UI.`);
+    }
+}
 
   return (
     <div>
@@ -135,6 +196,11 @@ function SavedPasswords() {
                       onClick={() => handleChangePassword(password.website)}
                     >
                       Change Password
+                    </button>
+                    <button
+                      onClick={() => handleDeleteEntry(password.website)}
+                    >
+                      Delete Entry
                     </button>
                   </div>
                 </div>
