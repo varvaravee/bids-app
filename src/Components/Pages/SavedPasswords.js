@@ -88,7 +88,7 @@ function SavedPasswords() {
 
       console.log("encrypted password:", encryptedPassword);
 
-      const response = await fetch("http://localhost:500/change_password", {
+      const response = await fetch("http://localhost:5000/change_password", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -129,7 +129,7 @@ function SavedPasswords() {
       console.log(`Deleting entry for: ${website}`);
   
       // Send request to server to delete the entry
-      fetch('https://localhost:500/delete_entry', {
+      fetch('http://localhost:5000/delete_entry', {
         method: 'POST',
         credentials: 'include',
         headers: {
