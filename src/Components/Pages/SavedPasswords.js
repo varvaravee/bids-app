@@ -72,47 +72,41 @@ function SavedPasswords() {
 
   //Function to handle changing password for website
   const handleChangePassword = async (website) => {
-    const newPassword = prompt("Enter the new password:");
+    const newPassword = prompt('Enter the new password:');
     if (!newPassword) return;
-
+  
     try {
-      console.log("New password:", newPassword);
-      console.log("Website:", website);
-      
-      //encrypt the new password using encryptionKey
       const encryptionKeyString = CryptoJS.enc.Base64.stringify(encryptionKey);
       const encryptedPassword = CryptoJS.AES.encrypt(
         newPassword,
         encryptionKeyString
       ).toString();
-
-      console.log("encrypted password:", encryptedPassword);
-
-      const response = await fetch("http://localhost:5000/change_password", {
-        method: "POST",
-        credentials: "include",
+  
+      const response = await fetch('http://localhost:5000/change_password', {
+        method: 'POST',
+        credentials: 'include',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          website: website,
+          website,
           new_encrypted_password: encryptedPassword,
         }),
       });
-
+  
       const data = await response.json();
-      console.log("Response from server:", data);
-
       if (response.ok) {
-        alert("Password updated successfully");
+        alert('Password updated successfully.');
+        // Optionally update UI here if the password is shown.
       } else {
-        alert(data.message || "Failed to update password");
+        alert(data.message || 'Failed to update password.');
       }
     } catch (error) {
-      console.error("Error changing password:", error);
-      alert("An error occurred while updating the password.");
+      console.error('Error changing password:', error);
+      alert('An error occurred while updating the password.');
     }
   };
+  
 
   function handleDeleteEntry(website) {
     // Ensure the website parameter is provided
@@ -121,7 +115,7 @@ function SavedPasswords() {
       return;
     }
   
-    // Confirm deletion with user
+    // eslint-disable-next-line no-restricted-globals
     const confirmDelete = confirm(`Are you sure you want to delete the password for "${website}"?`);
     if (!confirmDelete) return;
   
@@ -140,33 +134,28 @@ function SavedPasswords() {
         .then((response) => {
           if (response.ok) {
             alert('Entry deleted successfully.');
-            // Update the UI to remove the entry
-            removeEntryFromUI(website);
+            // Update list
+            setPasswords((prevPasswords) => prevPasswords.filter((pw) => pw.website !== website));
           } else {
-            response.json().then((data) => {
-              alert(data.message || 'Failed to delete entry.');
+            return response.json().then((data) => {
+              throw new Error(data.message || 'Failed to delete entry.');
             });
           }
         })
         .catch((error) => {
           console.error('Error deleting entry:', error);
-          alert('An error occurred while deleting the entry.');
+          alert(error.message || 'An error occurred while deleting the entry.');
         });
     } catch (error) {
-      console.error('Unexpected error:', error);
-      alert('An unexpected error occurred while deleting the entry.');
+      console.error('Unexpected error in handleDeleteEntry:', error);
+      alert('An unexpected error occurred. Please try again later.');
     }
   }
   
+  
+  
 
-  function removeEntryFromUI(website) {
-    // Locate and remove the entry from the table
-    const rowToDelete = document.querySelector(`[data-website="${website}"]`);
-    if (rowToDelete) {
-        rowToDelete.remove();
-        console.log(`Entry for ${website} removed from the UI.`);
-    }
-}
+
 
   return (
     <div>
