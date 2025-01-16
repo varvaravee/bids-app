@@ -97,7 +97,12 @@ function SavedPasswords() {
       const data = await response.json();
       if (response.ok) {
         alert('Password updated successfully.');
-        // Optionally update UI here if the password is shown.
+        // update state with new password
+        setPasswords((prevPasswords) =>
+          prevPasswords.map((pw) =>
+            pw.website === website ? {...pw, password: newPassword} : pw
+          )
+        );
       } else {
         alert(data.message || 'Failed to update password.');
       }
@@ -124,7 +129,7 @@ function SavedPasswords() {
   
       // Send request to server to delete the entry
       fetch('http://localhost:5000/delete_entry', {
-        method: 'POST',
+        method: 'DELETE',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
