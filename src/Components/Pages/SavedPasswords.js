@@ -4,6 +4,7 @@ import AuthContext from "../../AuthContext";
 import CryptoJS from "crypto-js";
 import "./SavedPasswords.css";
 
+
 //fetchPasswords outside of component to limit additional rendering
 const fetchPasswords = async (encryptionKeyString) => {
   try {
@@ -47,6 +48,7 @@ const fetchPasswords = async (encryptionKeyString) => {
   }
 };
 
+
 function SavedPasswords() {
   const { encryptionKey } = useContext(AuthContext);
   const [passwords, setPasswords] = useState([]);
@@ -64,12 +66,14 @@ function SavedPasswords() {
     loadPasswords(); //call function when component mounts
   }, [encryptionKey]); //dependency array contains encryptionKey, function re-executed whenever this dependency changes
 
+
   //Function to copy password to clipboard
   function handleCopyPassword(password) {
     navigator.clipboard.writeText(password);
     alert("Password copied to clipboard!");
   }
 
+  
   //Function to handle changing password for website
   const handleChangePassword = async (website) => {
     const newPassword = prompt('Enter the new password:');
