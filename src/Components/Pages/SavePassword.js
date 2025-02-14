@@ -1,9 +1,11 @@
 //this file handles saving a password for a single master pw using the derived encryption key to encrypt data
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom'; //import navigate for redirection
 import AuthContext from "../../AuthContext";
 import CryptoJS from 'crypto-js';
 
 function SavePassword() {
+    const navigate = useNavigate();
     const { encryptionKey } = useContext(AuthContext);
     const [website, setWebsite] = useState('');
     const [username, setUsername] = useState('');
@@ -45,6 +47,7 @@ function SavePassword() {
                 setWebsite('');
                 setUsername('');
                 setPassword('');
+                navigate('/SavedPasswords');
             } else {
                 alert(data.message);
             }

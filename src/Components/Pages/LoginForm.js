@@ -60,7 +60,7 @@ function LoginForm() {
 
     //if redirect triggered, redirect to the desired route
     if (redirect) {
-        return <Navigate to="/SavedPasswords"/>; //redirect to accounts page
+        return <Navigate to="/"/>; //redirect to accounts page
     }
 
     return (
